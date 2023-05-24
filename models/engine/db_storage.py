@@ -15,6 +15,7 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 classes = {
         'City': City,
         'Place': Place,
+        'Review': Review,
         'State': State,
         'User': User
 }
