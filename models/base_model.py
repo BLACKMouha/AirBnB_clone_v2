@@ -32,7 +32,7 @@ class BaseModel:
             self.updated_at = datetime.utcnow()
         else:
             if 'id' not in kwargs:
-                self.id = str(uui.uuid4())
+                self.id = str(uuid.uuid4())
             if 'updated_at' in kwargs:
                 kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],
                                                          '%Y-%m-%dT%H:%M:%S.%f'

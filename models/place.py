@@ -2,8 +2,23 @@
 """ Place Module for HBNB project """
 import models
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String, ForeignKey, Integer, Float
+from sqlalchemy import Column, String, ForeignKey, Integer, Float, Table
 from sqlalchemy.orm import relationship
+
+if models.storage_type == 'db':
+    place_amenity = Table('place_amenity',
+                          Base.metadata,
+                          Column('place_id',
+                                 String(60),
+                                 ForeignKey('places.id'),
+                                 nullable=False,
+                                 primary_key=True),
+                          Column('amenity_id',
+                                 String(60),
+                                 ForeignKey('amenities.id'),
+                                 nullable=False,
+                                 primary_key=True)
+                          )
 
 
 class Place(BaseModel, Base):
@@ -23,6 +38,10 @@ class Place(BaseModel, Base):
         reviews = relationship('Review',
                                backref='place',
                                cascade='all, delete, delete-orphan')
+        amenities = relationship('Amenity',
+                                 secondary='place_amenity',
+                                 backref='places',
+                                 viewonly=False)
     else:
         city_id = ""
         user_id = ""
@@ -42,3 +61,15 @@ class Place(BaseModel, Base):
             all_reviews = models.storage.all('Review')
             return [review for review in all_reviews
                     if review.place_id == self.id]
+
+        @property
+        def amenities(self):
+            '''Retrieves all amenities related to the current place'''
+            return self.amenity_ids
+
+        @amenities.setter
+        def amenities(self, obj):
+            '''Add or update an amenity for the current place'''
+            if obj is not None and obj.__class__.__name__ == 'Amenity' and\
+                    obj.get('id', None) is not None:
+                self.amenity_ids.append(obj.id)
