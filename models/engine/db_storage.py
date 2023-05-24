@@ -54,19 +54,14 @@ class DBStorage:
                         del o.__dict__['_sa_instance_state']
                     all_objs[k] = o
             return all_objs
-        try:
-            cls = eval(cls) if type(cls) is str else cls
-            if cls in classes.values():
-                q = self.__session.query(cls)
-                for o in q:
-                    k = o.to_dict()['__class_'] + '.' + o.id
-                    if '_sa_instance_state' in o.__dict__:
-                        del o.__dict__['_sa_instance_state']
-                    all_objs[k] = o
-                return all_objs
-            return None
-        except Exception as e:
-            print(e)
+        cls = eval(cls) if type(cls) is str else cls
+        if cls in classes.values():
+            q = self.__session.query(cls)
+            for o in q:
+                k = o.to_dict()['__class__'] + '.' + o.id
+                all_objs[k] = o
+            return all_objs
+        else:
             return None
 
     def new(self, obj):
