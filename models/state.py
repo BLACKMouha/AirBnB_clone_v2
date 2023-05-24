@@ -19,5 +19,5 @@ class State(BaseModel, Base):
         @property
         def cities(self):
             '''Retrieves all cities of the current state instance'''
-            all_cities = models.storage.all('City')
+            all_cities = models.storage.all('City').values()
             return [city for city in all_cities if city.state_id == self.id]
