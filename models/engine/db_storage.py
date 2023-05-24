@@ -87,3 +87,7 @@ class DBStorage:
         Session = scoped_session(session_factory)
         self.__session = Session()
         Base.metadata.create_all(self.__engine)
+
+    def close(self):
+        '''Removes the current database session'''
+        self.__session.close()

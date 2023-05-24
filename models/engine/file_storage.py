@@ -77,3 +77,7 @@ class FileStorage:
             k = obj.to_dict()['__class__'] + '.' + obj.id
             if k in self.all():
                 del self.all()[k]
+
+    def close(self):
+        '''Close the current file storage'''
+        self.reload()

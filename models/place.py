@@ -40,7 +40,7 @@ class Place(BaseModel, Base):
                                cascade='all, delete, delete-orphan')
         amenities = relationship('Amenity',
                                  secondary='place_amenity',
-                                 backref='places',
+                                 back_populates='place_amenities',
                                  viewonly=False)
     else:
         city_id = ""
