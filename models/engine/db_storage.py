@@ -13,6 +13,7 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 
 
 classes = {
+        'Amenity': Amenity,
         'City': City,
         'Place': Place,
         'Review': Review,
@@ -52,7 +53,7 @@ class DBStorage:
                     if '_sa_instance_state' in o.__dict__:
                         del o.__dict__['_sa_instance_state']
                     all_objs[k] = o
-            return all_objs
+                return all_objs
         try:
             cls = eval(cls) if type(cls) is str else cls
             if cls in classes.values():
