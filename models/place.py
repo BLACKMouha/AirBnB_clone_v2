@@ -58,7 +58,7 @@ class Place(BaseModel, Base):
         @property
         def reviews(self):
             '''Retrieves all reviews related to the current place'''
-            all_reviews = models.storage.all('Review')
+            all_reviews = models.storage.all('Review').values()
             return [review for review in all_reviews
                     if review.place_id == self.id]
 
