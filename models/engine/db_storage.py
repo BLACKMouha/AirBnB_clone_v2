@@ -47,7 +47,7 @@ class DBStorage:
                 q = self.__session.query(c)
                 for o in q:
                     k = o.to_dict()['__class__'] + '.' + o.id
-                    all_objs[k] = c(o.__dict__)
+                    all_objs[k] = str(o)
             return all_objs
         try:
             cls = eval(cls) if type(cls) is str else cls

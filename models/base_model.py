@@ -39,12 +39,13 @@ class BaseModel:
                                                          )
             else:
                 kwargs['updated_at'] = datetime.utcnow()
+
             if 'created_at' in kwargs:
                 kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
                                                          '%Y-%m-%dT%H:%M:%S.%f'
                                                          )
             else:
-                kwargs['updated_at'] = datetime.utcnow()
+                kwargs['created_at'] = datetime.utcnow()
 
             for k, v in kwargs.items():
                 if k != '__class__':
@@ -57,7 +58,7 @@ class BaseModel:
 
     def save(self):
         """Updates updated_at with current time when instance is changed"""
-        self.updated_at = datetime.now()
+        self.updated_at = datetime.utcnow()
         models.storage.new(self)
         models.storage.save()
 
