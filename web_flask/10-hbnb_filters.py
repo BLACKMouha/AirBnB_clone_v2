@@ -2,7 +2,6 @@
 """
 starts a Flask web application
 """
-
 from flask import Flask, render_template
 from models import *
 from models import storage
@@ -14,9 +13,11 @@ def hbnb_filters_route():
     '''Retrieves States, Cities and Amenities for HTML rendering'''
     all_states = storage.all('State').values()
     all_amenities = storage.all('Amenity').values()
+
     return render_template('10-hbnb_filters.html',
                            states=all_states,
                            amenities=all_amenities)
+
 
 @app.teardown_appcontext
 def close_session(exception):
